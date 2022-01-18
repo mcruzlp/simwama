@@ -1,3 +1,12 @@
 export const environment = {
+  firebase: {
+    projectId: 'simwama-d9222',
+    appId: '1:204174818195:web:8e2b1a4b2696d95a4d4666',
+    storageBucket: 'simwama-d9222.appspot.com',
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyAFW8EZpq8V3Fr6sJdOeC85KfZP56SuIXM',
+    authDomain: 'simwama-d9222.firebaseapp.com',
+    messagingSenderId: '204174818195',
+  },
   production: true
 };

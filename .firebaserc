@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "simwama-d9222": {
+      "hosting": {
+        "sinwama": [
+          "simwama-d9222"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "simwama-d9222"
+  }
+}
