@@ -2,6 +2,7 @@ import { ProductService } from './product.service';
 import { Component } from '@angular/core';
 import { Product } from './product';
 import { Observable } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,22 +10,26 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   products: Observable<Product[]>;
-  constructor(private productService: ProductService) {
-    this.products = this.productService.getProduct();
+
+  productForm = new FormGroup({
+    description: new FormControl(''),
+    purchasePrice: new FormControl(0),
+    salePrice: new FormControl(0),
+    stock: new FormControl(0),
+    picture: new FormControl(''),
+  });
+
+  constructor(public productService: ProductService) {
+    this.products = this.productService.getProducts();
   }
 
   addProduct() {
-    const newProduct: Product = {
-      productId: '',
-      description: 'perfume',
-      purchasePrice: 12,
-      salePrice: 25,
-      stock: 400,
-      picture:
-        'https://www.perfumeriascoqueteo.com/14373-thickbox_default/agua-fresca-de-rosas.jpg',
-    };
-    this.productService.addProduct(newProduct);
+    this.productService.addProduct(this.productForm.value);
+    this.productForm.reset();
+  }
+
+  updateProductStep1(id: string) {
+    //this.productForm = this.productService.getProductById(id);
   }
 }

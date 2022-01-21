@@ -1,2 +1,52 @@
-<button pButton (click)="addProduct()">Add product</button>
-{{ products | async | json }}
+<form [formGroup]="productForm" (ngSubmit)="addProduct()">
+  <label for="description">Description: </label>
+  <input id="description" type="text" formControlName="description" />
+  <br />
+  <label for="purchasePrice">Purchase price: </label>
+  <input id="purchasePrice" type="number" formControlName="purchasePrice" />
+  <br />
+  <label for="salePrice">Sale price: </label>
+  <input id="salePrice" type="number" formControlName="salePrice" />
+  <br />
+  <label for="stock">Stock: </label>
+  <input id="stock" type="number" formControlName="stock" />
+  <br />
+  <label for="picture">Picture: </label>
+  <input id="picture" type="text" formControlName="picture" />
+  <br />
+  <button type="submit">Add product</button>
+  <br />
+</form>
+
+<pre>
+  {{ productForm.value | json }}
+</pre>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Description</th>
+      <th>Purchase price</th>
+      <th>Sale price</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of products | async">
+      <td><img [src]="p.picture" width="60px" /></td>
+      <td>{{ p.description }}</td>
+      <td>{{ p.purchasePrice }}</td>
+      <td>{{ p.salePrice }}</td>
+      <td>{{ p.stock }}</td>
+      <td>
+        <!-- <button (click)="productService.updateProductStep1(p.productId)">
+          Update
+        </button> -->
+      </td>
+      <td>
+        <button (click)="productService.deleteProduct(p.productId)">X</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
