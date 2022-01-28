@@ -1,4 +1,4 @@
-<form [formGroup]="productForm" (ngSubmit)="addProduct()">
+<form [formGroup]="productForm" (ngSubmit)="formSubmit()">
   <label for="description">Description: </label>
   <input id="description" type="text" formControlName="description" />
   <br />
@@ -14,7 +14,7 @@
   <label for="picture">Picture: </label>
   <input id="picture" type="text" formControlName="picture" />
   <br />
-  <button type="submit">Add product</button>
+  <button type="submit">{{formButtonText}}</button>
   <br />
 </form>
 
@@ -40,9 +40,9 @@
       <td>{{ p.salePrice }}</td>
       <td>{{ p.stock }}</td>
       <td>
-        <!-- <button (click)="productService.updateProductStep1(p.productId)">
+        <button (click)="updateProductStep1(p.productId)">
           Update
-        </button> -->
+        </button>
       </td>
       <td>
         <button (click)="productService.deleteProduct(p.productId)">X</button>

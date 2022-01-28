@@ -11,8 +11,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class AppComponent {
   products: Observable<Product[]>;
+  formButtonText = 'Add product';
 
   productForm = new FormGroup({
+    productId: new FormControl(''),
     description: new FormControl(''),
     purchasePrice: new FormControl(0),
     salePrice: new FormControl(0),
@@ -30,6 +32,20 @@ export class AppComponent {
   }
 
   updateProductStep1(id: string) {
-    //this.productForm = this.productService.getProductById(id);
+    this.productService
+      .getProductById(id)
+      .subscribe((data) => this.productForm.patchValue(data));
+
+    this.formButtonText = 'Update product';
+  }
+
+  updateProductStep2() {
+    this.productService.updateProduct(this.productForm.value);
+  }
+
+  formSubmit() {
+    this.formButtonText === 'Add product'
+      ? this.addProduct()
+      : this.updateProductStep2();
   }
 }
