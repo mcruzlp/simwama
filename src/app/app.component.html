@@ -1,122 +1,52 @@
-<p-table [value]="(products | async)!" [paginator]="true" [rows]="5">
-  <!-- strick nullcheck ??-->
-  <ng-template pTemplate="header">
+<form [formGroup]="productForm" (ngSubmit)="formSubmit()">
+  <label for="description">Description: </label>
+  <input id="description" type="text" formControlName="description" />
+  <br />
+  <label for="purchasePrice">Purchase price: </label>
+  <input id="purchasePrice" type="number" formControlName="purchasePrice" />
+  <br />
+  <label for="salePrice">Sale price: </label>
+  <input id="salePrice" type="number" formControlName="salePrice" />
+  <br />
+  <label for="stock">Stock: </label>
+  <input id="stock" type="number" formControlName="stock" />
+  <br />
+  <label for="picture">Picture: </label>
+  <input id="picture" type="text" formControlName="picture" />
+  <br />
+  <button type="submit">{{formButtonText}}</button>
+  <br />
+</form>
+
+<pre>
+  {{ productForm.value | json }}
+</pre>
+
+<table>
+  <thead>
     <tr>
       <th></th>
       <th>Description</th>
       <th>Purchase price</th>
       <th>Sale price</th>
       <th>Stock</th>
-      <th></th>
-      <th></th>
     </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-p>
-    <tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of products | async">
       <td><img [src]="p.picture" width="60px" /></td>
       <td>{{ p.description }}</td>
       <td>{{ p.purchasePrice }}</td>
       <td>{{ p.salePrice }}</td>
       <td>{{ p.stock }}</td>
       <td>
-        <button
-          pButton
-          type="button"
-          icon="pi pi-pencil"
-          class="p-button-rounded"
-          title="Update product"
-          (click)="updateProductStep1(p.productId)"
-        ></button>
+        <button (click)="updateProductStep1(p.productId)">
+          Update
+        </button>
       </td>
       <td>
-        <button
-          pButton
-          type="button"
-          icon="pi pi-trash"
-          class="p-button-rounded"
-          title="Delete product"
-          (click)="productService.deleteProduct(p.productId)"
-        ></button>
+        <button (click)="productService.deleteProduct(p.productId)">X</button>
       </td>
     </tr>
-  </ng-template>
-</p-table>
-
-<div class="add-button">
-  <p-speedDial (click)="displayProductForm = true"></p-speedDial>
-</div>
-
-<!-- Form dialog-->
-<p-dialog [(visible)]="displayProductForm" [style]="{ width: '40vw' }">
-  <ng-template pTemplate="header"> Product </ng-template>
-
-  <form [formGroup]="productForm" (ngSubmit)="formSubmit()">
-    <div class="card">
-      <div class="field">
-        <label for="description">Description: </label>
-        <input
-          pInputText
-          id="description"
-          type="text"
-          formControlName="description"
-        />
-      </div>
-
-      <div class="field">
-        <label for="purchasePrice">Purchase price: </label>
-        <p-inputNumber
-          id="purchasePrice"
-          formControlName="purchasePrice"
-          type="number"
-          [showButtons]="true"
-          inputId="stacked"
-          mode="currency"
-          currency="EUR"
-        >
-        </p-inputNumber>
-      </div>
-
-      <div class="field">
-        <label for="salePrice">Sale price: </label>
-        <p-inputNumber
-          id="salePrice"
-          formControlName="salePrice"
-          type="number"
-          [showButtons]="true"
-          inputId="stacked"
-          mode="currency"
-          currency="EUR"
-        >
-        </p-inputNumber>
-      </div>
-      <div class="field">
-        <label for="stock">Stock: </label>
-        <p-inputNumber
-          id="stock"
-          formControlName="stock"
-          type="number"
-          [showButtons]="true"
-          inputId="stacked"
-        ></p-inputNumber>
-      </div>
-
-      <div class="field">
-        <label for="picture">Picture: </label>
-        <input pInputText id="picture" type="text" formControlName="picture" />
-      </div>
-    </div>
-  </form>
-
-  <p-footer>
-    <p-button
-      type="submit"
-      styleClass="p-button-success"
-      [label]="formButtonText"
-    ></p-button>
-    <p-button
-      (click)="displayProductForm = false"
-      label="Cancel"
-      styleClass="p-button-danger"
-    ></p-button>
-  </p-footer>
-</p-dialog>
+  </tbody>
+</table>

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
+  addDoc,
   collection,
   collectionData,
-  Firestore,
-  addDoc,
   deleteDoc,
   doc,
-  setDoc,
   docData,
+  Firestore,
+  setDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Product } from './product';
@@ -36,17 +36,15 @@ export class ProductService {
     }) as Observable<Product[]>;
   }
 
+  getProductById(id: string): Observable<Product> {
+    return docData(doc(this.firestore, `products/${id}`), {idField: 'productId'}) as Observable<Product>;
+  }
+
   async deleteProduct(id: string) {
     await deleteDoc(doc(this.firestore, `products/${id}`));
   }
 
   async updateProduct(product: Product) {
     await setDoc(doc(this.firestore, `products/${product.productId}`), product);
-  }
-
-  getProduct(id: string): Observable<Product> {
-    return docData(doc(this.firestore, `products/${id}`), {
-      idField: 'productId',
-    }) as Observable<Product>;
   }
 }
