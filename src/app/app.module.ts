@@ -16,25 +16,28 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { TableModule } from 'primeng/table';
+import { PanelModule } from 'primeng/panel';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     ReactiveFormsModule,
-    //PrimeNG
+
+    //primeng
     ButtonModule,
     DialogModule,
     InputNumberModule,
     InputTextModule,
+    PanelModule,
     TableModule,
     SpeedDialModule,
   ],

@@ -23,24 +23,27 @@ export class AppComponent {
 
   formButtonText = 'Add product';
   displayProductForm = false;
+  displayConfirmDelete = false;
+  idForDeletion = '';
+  descriptionForDeletion = '';
 
   constructor(public productService: ProductService) {
     this.products = this.productService.getProducts();
   }
 
   addProduct() {
-    this.productService.addProduct(this.productForm.value);
+    this.formButtonText = 'Add product';
     this.productForm.reset({ salePrice: 0, purchasePrice: 0, stock: 0 });
+    this.productService.addProduct(this.productForm.value);
     console.log('addProduct');
   }
 
   updateProductStep1(id: string) {
+    this.formButtonText = 'Update product';
     this.productService.getProduct(id).subscribe((data) => {
       this.productForm.patchValue(data);
       console.log('data: ' + JSON.stringify(data));
     });
-
-    this.formButtonText = 'Update product';
   }
 
   updateProductStep2() {
@@ -49,8 +52,23 @@ export class AppComponent {
   }
 
   formSubmit() {
-    this.formButtonText === 'Add product'
-      ? this.addProduct()
-      : this.updateProductStep2();
+    if (this.formButtonText === 'Update product') {
+      this.updateProductStep2();
+    } else {
+      this.addProduct();
+    }
+
+    this.displayProductForm = false;
+  }
+
+  confirmDeleteProduct(product: Product) {
+    this.idForDeletion = product.productId;
+    this.descriptionForDeletion = product.description;
+    this.displayConfirmDelete = true;
+  }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.idForDeletion);
+    this.displayConfirmDelete = false;
   }
 }
